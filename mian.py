@@ -81,5 +81,5 @@ if __name__ == '__main__':
             down_data.append(t)
 
     mail_data = send_mail.get_html(new_data, down_data, old_data)
-    send_mail.mail("709318017@qq.com", mail_data)
+    send_mail.mail(config.to_mail, mail_data)
     insert_today_data(data_list)
