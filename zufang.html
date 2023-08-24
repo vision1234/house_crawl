@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Listings - 链家</title>
+</head>
+
+<body>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+
+        header {
+            background-color: #0a8ac9;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .listing-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .listing-item {
+            width: 100%;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .image-container {
+            flex: 0 0 150px;
+            height: 100px;
+            margin-right: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 5px;
+        }
+
+        .listing-details {
+            flex: 1;
+        }
+
+        .listing-item h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .listing-item  a {
+            text-decoration: none;
+        }
+
+        .listing-item p {
+            margin-bottom: 5px;
+            font-size: 13px;
+
+        }
+        .listing-item p span{
+            color: #fa5741;
+            font-weight:bold;
+            font-size: 18px;
+        }
+        footer {
+            background-color: #0a8ac9;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+        }
+
+        footer ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        footer ul li {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        footer ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+
+
+
+    <main>
+        <h1 style="text-align: center; margin-bottom: 20px;">今日({date})在租房源:{num}|新上:{new_num}|下架:{down_num}</h1>
+        <h2 style="text-align: center; margin-bottom: 20px;">新上房源</h2>
+        <div class="listing-container">
+            {news}
+
+        </div>
+        <h2 style="text-align: center; margin-bottom: 20px;">下架房源</h2>
+        <div class="listing-container">
+            {downs}
+
+        </div>
+        <h2 style="text-align: center; margin-bottom: 20px;">在租房源</h2>
+        <div class="listing-container">
+            {items}
+
+        </div>
+    </main>
+
+</body>
+
+</html>
