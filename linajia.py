@@ -3,8 +3,8 @@ import requests
 from lxml import etree
 
 
-def get_lianjia_data():
-    url = 'https://bj.lianjia.com/ditiezufang/li656s43137676/rt200600000001l1l2ra2ra3ra4brp4000erp7300/'
+def get_lianjia_data(url):
+    # url = 'https://bj.lianjia.com/ditiezufang/li656s43137676/rt200600000001l1l2ra2ra3ra4brp4000erp7300/'
 
     headers = {
         "Host": "bj.lianjia.com",
@@ -33,3 +33,5 @@ def get_lianjia_data():
     return zufang_data_list
     # print(res.status_code)
     # print(res.text)
+if __name__ == '__main__':
+    print(get_lianjia_data("https://bj.lianjia.com/ditiezufang/li656s43137676/rt200600000001l1l2ra2ra3ra4brp4000erp7300/"))

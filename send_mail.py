@@ -12,8 +12,7 @@ import config
 
 my_sender = config.my_sender  # 发件人邮箱账号
 my_pass = config.my_pass  # 口令
-from_name = config.from_name
-to_name = config.to_name
+
 
 
 def mail(u, datas):
@@ -22,14 +21,15 @@ def mail(u, datas):
     try:
         mes_str = datas
         msg = MIMEText(mes_str, _subtype="html", _charset='utf-8')
-        msg['From'] = formataddr([from_name, my_sender])  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
-        msg['To'] = formataddr([to_name, u])  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
+        msg['From'] = formataddr([my_sender, my_sender])  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
+        msg['To'] = formataddr([u, u])  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
         msg['Subject'] = "租房推送"  # 邮件的主题，也可以说是标题
 
         server = smtplib.SMTP_SSL("smtp.qq.com", 465)  # 发件人邮箱中的SMTP服务器，端口是25
         server.login(my_sender, my_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
         server.sendmail(my_sender, [u, ], msg.as_string())  # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
         server.quit()  # 关闭连接
+        print("发送成功")
     except Exception as e:  # 如果 try 中的语句没有执行，则会执行下面的 ret=False
         print(e)
         logging.exception(e)
