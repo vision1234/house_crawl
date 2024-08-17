@@ -47,8 +47,9 @@ def get_yesterday_data_all():
 
 
 def insert_today_data(data):
+
     # 執行INSERT語句
-    insert_sql = "insert into houses (title,update_date,img_url,source_url,price,source,estate_name,rent_type,few_room,room_name,area,`floor`,total_floor,orientation,district_name,business_circle_name,subway_station_name,subway_line_name,walk_distance,house_tags) VALUES(%s,CURDATE(),%s,%s,%d,%s,%s,%s,%d)"
+    insert_sql = "insert into houses (title,update_date,img_url,source_url,price,`source`,estate_name,rent_type,few_room,room_name,area,`floor`,total_floor,orientation,district_name,business_circle_name,subway_station_name,subway_line_name,walk_distance,house_tags) VALUES(%s,CURDATE(),%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     for d in data:
         data_to_insert = (d["title"], d["img_url"], d["source_url"], d["price"], d["source"],d["estate_name"],d["rent_type"],d["few_room"],d["room_name"],d["area"],d["floor"],d["total_floor"],d["orientation"],d["district_name"],d["business_circle_name"],d["subway_station_name"],d["subway_line_name"],d["walk_distance"],d["house_tags"])
         print(d)
@@ -78,11 +79,11 @@ if __name__ == '__main__':
                 if res_data["source_url"] not in id_set:
                     id_set.add(res_data["source_url"])
                     data_list.append(res_data)
-        for location_url_bk in mail_info["location_url_bk"]:
-            for res_data in beike.get_beike_data(location_url_bk):
-                if res_data["source_url"] not in id_set:
-                    id_set.add(res_data["source_url"])
-                    data_list.append(res_data)
+        # for location_url_bk in mail_info["location_url_bk"]:
+        #     for res_data in beike.get_beike_data(location_url_bk):
+        #         if res_data["source_url"] not in id_set:
+        #             id_set.add(res_data["source_url"])
+        #             data_list.append(res_data)
         for data in data_list:
             if not get_yesterday_data_one(data["source_url"])[0]:
                 new_data.append(data)

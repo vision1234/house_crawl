@@ -16,7 +16,7 @@ def get_beike_data(url):
     i = 1
     zufang_data_list = []
     while True:
-        print(url_base)
+        print(url_base.format(i))
         res = requests.get(url_base.format(i), headers=headers).text
         html = etree.HTML(res)
         data_list = html.xpath('//*[@id="content"]//div[@class="content__list--item"]')
