@@ -79,11 +79,11 @@ if __name__ == '__main__':
                 if res_data["source_url"] not in id_set:
                     id_set.add(res_data["source_url"])
                     data_list.append(res_data)
-        # for location_url_bk in mail_info["location_url_bk"]:
-        #     for res_data in beike.get_beike_data(location_url_bk):
-        #         if res_data["source_url"] not in id_set:
-        #             id_set.add(res_data["source_url"])
-        #             data_list.append(res_data)
+        for location_url_bk in mail_info["location_url_bk"]:
+            for res_data in beike.get_beike_data(location_url_bk):
+                if res_data["source_url"] not in id_set:
+                    id_set.add(res_data["source_url"])
+                    data_list.append(res_data)
         for data in data_list:
             if not get_yesterday_data_one(data["source_url"])[0]:
                 new_data.append(data)

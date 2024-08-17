@@ -23,7 +23,7 @@ def get_beike_data(url):
 
         for d in data_list:
             title = d.xpath(
-                './div[@class="content__list--item--main"]/p[@class="content__list--item--title"]//text()')
+                './div[@class="content__list--item--main"]/p[@class="content__list--item--title"]/a/text()')
             desc = "".join(d.xpath(
                 './div[@class="content__list--item--main"]/p[@class="content__list--item--des"]//text()')).replace(" ",
                                                                                                                    "").replace(
