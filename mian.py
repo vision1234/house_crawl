@@ -47,16 +47,20 @@ def get_yesterday_data_all():
 
 
 def insert_today_data(data):
-
+    del_sql = "delete from houses where update_date=CURRENT_DATE()"
+    cursor.execute(del_sql)
     # 執行INSERT語句
     insert_sql = "insert into houses (title,update_date,img_url,source_url,price,`source`,estate_name,rent_type,few_room,room_name,area,`floor`,total_floor,orientation,district_name,business_circle_name,subway_station_name,subway_line_name,walk_distance,house_tags) VALUES(%s,CURDATE(),%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     for d in data:
-        data_to_insert = (d["title"], d["img_url"], d["source_url"], d["price"], d["source"],d["estate_name"],d["rent_type"],d["few_room"],d["room_name"],d["area"],d["floor"],d["total_floor"],d["orientation"],d["district_name"],d["business_circle_name"],d["subway_station_name"],d["subway_line_name"],d["walk_distance"],d["house_tags"])
+        data_to_insert = (
+        d["title"], d["img_url"], d["source_url"], d["price"], d["source"], d["estate_name"], d["rent_type"],
+        d["few_room"], d["room_name"], d["area"], d["floor"], d["total_floor"], d["orientation"], d["district_name"],
+        d["business_circle_name"], d["subway_station_name"], d["subway_line_name"], d["walk_distance"], d["house_tags"])
         print(d)
         cursor.execute(insert_sql, data_to_insert)
 
         # 提交事務
-        connection.commit()
+    connection.commit()
 
 
 def get_source_from_data(zf_data):

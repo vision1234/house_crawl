@@ -1,2 +1,2 @@
-source /software/pyenv/my/bin/activate;
-python job.py >>job.log
+source /home/vision123/envs/my/bin/activate;
+python main.py >>main.log
