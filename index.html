@@ -102,10 +102,7 @@
         }
 
         .export-button {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background-color: #27ae60;
+            background-color: #a6f58e;
             color: #fff;
             padding: 10px 15px;
             border-radius: 4px;
@@ -140,10 +137,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Estate Data</h1>
+        <h1>租房数据（自用）</h1>
 
-        <!-- 导出按钮放置在右上角 -->
-        <a href="/export" class="export-button">Export to Excel</a>
 
         <!-- 排序区域 -->
         <form method="get">
@@ -165,6 +160,7 @@
                 <button type="button" onclick="addSortField()">Add Sort Field</button>
 
                 <input type="text" id="sort_fields" name="sort_fields" placeholder="Sort fields">
+                <a href="/export" class="export-button">导出excel</a>
             </div>
 
             <!-- 过滤区域 -->
