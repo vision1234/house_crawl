@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estate Data</title>
+
+    <!-- 引入 Google 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            position: relative;
+            width: 80%;
+            max-width: 1920px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: left;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        select, input[type="text"], input[type="date"], button, input[type="submit"] {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ccd1d9;
+            outline: none;
+            font-size: 14px;
+        }
+
+        select:focus, input[type="text"]:focus, input[type="date"]:focus, button:focus, input[type="submit"]:focus {
+            border-color: #3498db;
+        }
+
+        button, input[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover, input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #f1f1f1;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .export-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #27ae60;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .export-button:hover {
+            background-color: #1e8449;
+        }
+
+        .img-cell img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 4px;
+        }
+    </style>
+
+    <script>
+        function addSortField() {
+            var sortField = document.getElementById("sort_by").value;
+            var order = document.getElementById("order").value;
+            var sortTextBox = document.getElementById("sort_fields");
+
+            if (sortTextBox.value) {
+                sortTextBox.value += ',';
+            }
+            sortTextBox.value += sortField + ' ' + order;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Estate Data</h1>
+
+        <!-- 导出按钮放置在右上角 -->
+        <a href="/export" class="export-button">Export to Excel</a>
+
+        <!-- 排序区域 -->
+        <form method="get">
+            <div class="form-group">
+                <label for="sort_by">Sort by:</label>
+                <select id="sort_by">
+                    <option value="price">Price</option>
+                    <option value="area">Area</option>
+                    <option value="update_date">Update Date</option>
+                    <!-- 添加更多排序选项 -->
+                </select>
+
+                <label for="order">Order:</label>
+                <select id="order">
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                </select>
+
+                <button type="button" onclick="addSortField()">Add Sort Field</button>
+
+                <input type="text" id="sort_fields" name="sort_fields" placeholder="Sort fields">
+            </div>
+
+            <!-- 过滤区域 -->
+            <div class="form-group">
+                <label for="update_date">Update Date:</label>
+                <input type="date" id="update_date" name="update_date">
+
+                <label for="rent_type">Rent Type:</label>
+                <select id="rent_type" name="rent_type">
+                    <option value="">Any</option>
+                    <option value="entire">Entire Rent</option>
+                    <option value="shared">Shared Rent</option>
+                    <!-- 添加更多租赁类型 -->
+                </select>
+
+                <label for="estate_name">Estate Name:</label>
+                <select id="estate_name" name="estate_name">
+                    <option value="">Any</option>
+                    <!-- 需要在服务器端动态生成选项 -->
+                    {% for estate in estate_names %}
+                    <option value="{{ estate }}">{{ estate }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="subway_station_name">Subway Station:</label>
+                <select id="subway_station_name" name="subway_station_name">
+                    <option value="">Any</option>
+                    <!-- 需要在服务器端动态生成选项 -->
+                    {% for station in subway_stations %}
+                    <option value="{{ station }}">{{ station }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="house_tags">House Feature Tags:</label>
+                <select id="house_tags" name="house_tags" multiple>
+                    <!-- 需要在服务器端动态生成选项 -->
+                    {% for tag in house_tags %}
+                    <option value="{{ tag }}">{{ tag }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <input type="submit" value="Apply Sort and Filter">
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>House Introduction</th>
+                    <th>Image</th>
+                    <th>Update Date</th>
+                    <th>Price</th>
+                    <th>Source</th>
+                    <th>Estate Name</th>
+                    <th>Rent Type</th>
+                    <th>Rooms</th>
+                    <th>Room Name</th>
+                    <th>Area (sq.m.)</th>
+                    <th>Floor</th>
+                    <th>Total Floors</th>
+                    <th>Orientation</th>
+                    <th>District</th>
+                    <th>Business Circle</th>
+                    <th>Subway Station</th>
+                    <th>Subway Line</th>
+                    <th>Walk Distance (m)</th>
+                    <th>House Feature Tags</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                <tr>
+                    <td><a href="{{ item.source_url }}" target="_blank">{{ item.title }}</a></td>
+                    <td class="img-cell"><img src="{{ item.img_url }}" alt="Image"></td>
+                    <td>{{ item.update_date }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.source }}</td>
+                    <td>{{ item.estate_name }}</td>
+                    <td>{{ item.rent_type }}</td>
+                    <td>{{ item.few_room }}</td>
+                    <td>{{ item.room_name }}</td>
+                    <td>{{ item.area }}</td>
+                    <td>{{ item.floor }}</td>
+                    <td>{{ item.total_floor }}</td>
+                    <td>{{ item.orientation }}</td>
+                    <td>{{ item.district_name }}</td>
+                    <td>{{ item.business_circle_name }}</td>
+                    <td>{{ item.subway_station_name }}</td>
+                    <td>{{ item.subway_line_name }}</td>
+                    <td>{{ item.walk_distance }}</td>
+                    <td>{{ item.house_tags }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
