@@ -143,7 +143,7 @@
         <!-- 排序区域 -->
         <form method="get">
             <div class="form-group">
-                <label for="sort_by">Sort by:</label>
+                <label for="sort_by">排序:</label>
                 <select id="sort_by">
                     <option value="price">Price</option>
                     <option value="area">Area</option>
@@ -151,13 +151,13 @@
                     <!-- 添加更多排序选项 -->
                 </select>
 
-                <label for="order">Order:</label>
+                <label for="order">正逆序:</label>
                 <select id="order">
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
+                    <option value="asc">从小到大</option>
+                    <option value="desc">从大到小</option>
                 </select>
 
-                <button type="button" onclick="addSortField()">Add Sort Field</button>
+                <button type="button" onclick="addSortField()">添加</button>
 
                 <input type="text" id="sort_fields" name="sort_fields" placeholder="Sort fields">
                 <a href="/export" class="export-button">导出excel</a>
@@ -165,10 +165,10 @@
 
             <!-- 过滤区域 -->
             <div class="form-group">
-                <label for="update_date">Update Date:</label>
+                <label for="update_date">更新日期:</label>
                 <input type="date" id="update_date" name="update_date">
 
-                <label for="rent_type">Rent Type:</label>
+                <label for="rent_type">租赁类型:</label>
                 <select id="rent_type" name="rent_type">
                     <option value="">Any</option>
                     <option value="entire">Entire Rent</option>
@@ -176,7 +176,7 @@
                     <!-- 添加更多租赁类型 -->
                 </select>
 
-                <label for="estate_name">Estate Name:</label>
+                <label for="estate_name">小区:</label>
                 <select id="estate_name" name="estate_name">
                     <option value="">Any</option>
                     <!-- 需要在服务器端动态生成选项 -->
@@ -185,7 +185,7 @@
                     {% endfor %}
                 </select>
 
-                <label for="subway_station_name">Subway Station:</label>
+                <label for="subway_station_name">地铁站:</label>
                 <select id="subway_station_name" name="subway_station_name">
                     <option value="">Any</option>
                     <!-- 需要在服务器端动态生成选项 -->
@@ -194,7 +194,7 @@
                     {% endfor %}
                 </select>
 
-                <label for="house_tags">House Feature Tags:</label>
+                <label for="house_tags">房屋标签:</label>
                 <select id="house_tags" name="house_tags" multiple>
                     <!-- 需要在服务器端动态生成选项 -->
                     {% for tag in house_tags %}
@@ -203,31 +203,31 @@
                 </select>
             </div>
 
-            <input type="submit" value="Apply Sort and Filter">
+            <input type="submit" value="应用并查找">
         </form>
 
         <table>
             <thead>
                 <tr>
-                    <th>House Introduction</th>
-                    <th>Image</th>
-                    <th>Update Date</th>
-                    <th>Price</th>
-                    <th>Source</th>
-                    <th>Estate Name</th>
-                    <th>Rent Type</th>
-                    <th>Rooms</th>
-                    <th>Room Name</th>
-                    <th>Area (sq.m.)</th>
-                    <th>Floor</th>
-                    <th>Total Floors</th>
-                    <th>Orientation</th>
-                    <th>District</th>
-                    <th>Business Circle</th>
-                    <th>Subway Station</th>
-                    <th>Subway Line</th>
-                    <th>Walk Distance (m)</th>
-                    <th>House Feature Tags</th>
+                    <th>标题</th>
+                    <th>图片</th>
+                    <th>更新日期</th>
+                    <th>价格</th>
+                    <th>来源</th>
+                    <th>小区名称</th>
+                    <th>租赁类型</th>
+                    <th>居室</th>
+                    <th>房间</th>
+                    <th>面积</th>
+                    <th>楼层</th>
+                    <th>总楼层</th>
+                    <th>朝向</th>
+                    <th>地区</th>
+                    <th>商圈名</th>
+                    <th>地铁站名</th>
+                    <th>地铁线</th>
+                    <th>地铁站步行距离</th>
+                    <th>房屋标签</th>
                 </tr>
             </thead>
             <tbody>
