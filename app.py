@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 from io import BytesIO
 
-app = Flask(__name__,template_folder='./')
+app = Flask(__name__, template_folder='./')
 
 # 配置 MySQL 数据库
 password = "Vision123!@#"
@@ -101,8 +101,8 @@ def export():
     df.to_excel(output, index=False)
     output.seek(0)
 
-    return send_file(output,download_name='啊.xlsx', as_attachment=True)
+    return send_file(output, download_name='租房数据（自用）.xlsx', as_attachment=True)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=7666)
