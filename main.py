@@ -100,5 +100,6 @@ if __name__ == '__main__':
                 down_data.append(t)
 
         mail_data = send_mail.get_html(new_data, down_data, old_data)
-        send_mail.mail(mail_info["mail"], mail_data)
+        for mail_d in mail_info["mails"]:
+            send_mail.mail(mail_d, mail_data)
         insert_today_data(data_list)
