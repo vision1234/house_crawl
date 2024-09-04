@@ -17,19 +17,19 @@ connection = pymysql.connect(
 cursor = connection.cursor()
 
 
-def get_yesterday_data_one(source_url):
+def get_yesterday_data_one(source_url,u):
     # 執行SELECT查詢
-    sql = "SELECT count(1) FROM houses where update_date=DATE_ADD(CURDATE(),INTERVAL -1 DAY) and source_url=%s"
-    cursor.execute(sql, source_url)
+    sql = "SELECT count(1) FROM houses where update_date=DATE_ADD(CURDATE(),INTERVAL -1 DAY) and source_url=%s and user=%s"
+    cursor.execute(sql, (source_url,u))
 
     results = cursor.fetchone()
 
     return list(results)
 
 
-def get_yesterday_data_all():
+def get_yesterday_data_all(u):
     # 執行SELECT查詢
-    sql = "SELECT * FROM houses where update_date=DATE_ADD(CURDATE(),INTERVAL -1 DAY)"
+    sql = "SELECT * FROM houses where update_date=DATE_ADD(CURDATE(),INTERVAL -1 DAY) and user='{}'".format(u)
     cursor.execute(sql)
 
     # 獲取所有結果行
@@ -46,16 +46,18 @@ def get_yesterday_data_all():
     return results_list
 
 
-def insert_today_data(data):
-    del_sql = "delete from houses where update_date=CURRENT_DATE()"
+def insert_today_data(data, u):
+    del_sql = "delete from houses where update_date=CURRENT_DATE() and user='{}'".format(u)
     cursor.execute(del_sql)
     # 執行INSERT語句
-    insert_sql = "insert into houses (title,update_date,img_url,source_url,price,`source`,estate_name,rent_type,few_room,room_name,area,`floor`,total_floor,orientation,district_name,business_circle_name,subway_station_name,subway_line_name,walk_distance,house_tags) VALUES(%s,CURDATE(),%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    insert_sql = "insert into houses (title,update_date,img_url,source_url,price,`source`,estate_name,rent_type,few_room,room_name,area,`floor`,total_floor,orientation,district_name,business_circle_name,subway_station_name,subway_line_name,walk_distance,house_tags,user) VALUES(%s,CURDATE(),%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     for d in data:
         data_to_insert = (
-        d["title"], d["img_url"], d["source_url"], d["price"], d["source"], d["estate_name"], d["rent_type"],
-        d["few_room"], d["room_name"], d["area"], d["floor"], d["total_floor"], d["orientation"], d["district_name"],
-        d["business_circle_name"], d["subway_station_name"], d["subway_line_name"], d["walk_distance"], d["house_tags"])
+            d["title"], d["img_url"], d["source_url"], d["price"], d["source"], d["estate_name"], d["rent_type"],
+            d["few_room"], d["room_name"], d["area"], d["floor"], d["total_floor"], d["orientation"],
+            d["district_name"],
+            d["business_circle_name"], d["subway_station_name"], d["subway_line_name"], d["walk_distance"],
+            d["house_tags"], u)
         print(d)
         cursor.execute(insert_sql, data_to_insert)
 
@@ -89,12 +91,12 @@ if __name__ == '__main__':
                     id_set.add(res_data["source_url"])
                     data_list.append(res_data)
         for data in data_list:
-            if not get_yesterday_data_one(data["source_url"])[0]:
+            if not get_yesterday_data_one(data["source_url"],mail_info["user"])[0]:
                 new_data.append(data)
             else:
                 old_data.append(data)
         source_urls = get_source_from_data(data_list)
-        yesterday_data = get_yesterday_data_all()
+        yesterday_data = get_yesterday_data_all(mail_info["user"])
         for t in yesterday_data:
             if t["source_url"] not in source_urls:
                 down_data.append(t)
@@ -102,4 +104,4 @@ if __name__ == '__main__':
         mail_data = send_mail.get_html(new_data, down_data, old_data)
         for mail_d in mail_info["mails"]:
             send_mail.mail(mail_d, mail_data)
-        insert_today_data(data_list)
+        insert_today_data(data_list, mail_info["user"])
