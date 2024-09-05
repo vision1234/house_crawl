@@ -42,7 +42,7 @@ def get_beike_data(url):
                 "source": "贝壳",
                 "estate_name": title[0].strip()[3:title[0].strip().find(" ")],  # 小区
                 "rent_type": title[0].strip()[:2],
-                "few_room": title[0].strip()[title[0].strip().find(" ") + 1:title[0].strip().find(" ") + 2],  # 居室
+                "few_room": int(desc.split("/")[3].strip()[0]),  # 居室
                 "room_name": title[0].strip()[title[0].strip().rfind(" "):],  # 主卧次卧
                 "area": float(desc.split("/")[1].replace("㎡", "")),  # 面积
                 "floor": None,  # 楼层
