@@ -101,7 +101,7 @@ if __name__ == '__main__':
             if t["source_url"] not in source_urls:
                 down_data.append(t)
 
-        # mail_data = send_mail.get_html(new_data, down_data, old_data)
-        # for mail_d in mail_info["mails"]:
-        #     send_mail.mail(mail_d, mail_data)
+        mail_data = send_mail.get_html(new_data, down_data, old_data)
+        for mail_d in mail_info["mails"]:
+            send_mail.mail(mail_d, mail_data)
         insert_today_data(data_list, mail_info["user"])
