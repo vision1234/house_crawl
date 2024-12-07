@@ -28,28 +28,31 @@ def get_woaiwojia_data(base_url, page=1):
 
     for d in data_list:
         # print(d.xpath('./div[@class="listImg"]/a/img/@data-src'))
-        zufang_data_list.append({
-            "img_url": d["coverPicUrl"],
-            "source_url": 'https://www.1zu.com/view/' + str(d["id"]),
-            "title": "{}·{} {}居室{}{}".format("合租" if d["rentType"] == 2 else "整租", d["estateName"], d["fewRoom"],
-                                               "-" if d["roomName"] != "" else "", d["roomName"]),
-            "price": d["rentPrice"],
-            "source": "相寓",
-            "estate_name": d["estateName"],  # 小区
-            "rent_type": "合租" if d["rentType"] == 2 else "整租",
-            "few_room": d["fewRoom"],  # 居室
-            "room_name": d["roomName"],  # 主卧次卧
-            "area": d["area"],  # 面积
-            "floor": d["floor"],  # 楼层
-            "total_floor": d["totalFloor"],  # 总楼层
-            "orientation": d["orientation"],  # 朝向
-            "district_name": d["districtName"],  # 区
-            "business_circle_name": d["businessCircle"]["businessCircleName"],  # 商圈
-            "subway_station_name": d["subways"][0]["subwayStationName"] if len(d["subways"]) > 0 else "",  # 地铁站
-            "subway_line_name": d["subways"][0]["subwayLineName"] if len(d["subways"]) > 0 else "",  # 地铁线
-            "walk_distance": d["subways"][0]["walkDistance"] if len(d["subways"]) > 0 else "",  # 步行距离
-            "house_tags": " ".join([h["tagValue"] for h in d["houseTags"]])  # 标签
-        })
+        try:
+            zufang_data_list.append({
+                "img_url": d["coverPicUrl"],
+                "source_url": 'https://www.1zu.com/view/' + str(d["id"]),
+                "title": "{}·{} {}居室{}{}".format("合租" if d["rentType"] == 2 else "整租", d["estateName"], d["fewRoom"],
+                                                 "-" if d["roomName"] != "" else "", d["roomName"]),
+                "price": d["rentPrice"],
+                "source": "相寓",
+                "estate_name": d["estateName"],  # 小区
+                "rent_type": "合租" if d["rentType"] == 2 else "整租",
+                "few_room": d["fewRoom"],  # 居室
+                "room_name": d["roomName"],  # 主卧次卧
+                "area": d["area"],  # 面积
+                "floor": d["floor"],  # 楼层
+                "total_floor": d["totalFloor"],  # 总楼层
+                "orientation": d["orientation"],  # 朝向
+                "district_name": d["districtName"],  # 区
+                "business_circle_name": d["businessCircle"]["businessCircleName"],  # 商圈
+                "subway_station_name": d["subways"][0]["subwayStationName"] if len(d["subways"]) > 0 else "",  # 地铁站
+                "subway_line_name": d["subways"][0]["subwayLineName"] if len(d["subways"]) > 0 else "",  # 地铁线
+                "walk_distance": d["subways"][0]["walkDistance"] if len(d["subways"]) > 0 else "",  # 步行距离
+                "house_tags": " ".join([h["tagValue"] for h in d["houseTags"]])  # 标签
+            })
+        except:
+            pass
     total = json.loads(data_list_)["props"]["pageProps"]["total"]
     if total > page * 20:
         print("next!!!!!!!!")

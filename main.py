@@ -56,7 +56,7 @@ def insert_today_data(data, u):
             d["title"], d["img_url"], d["source_url"], d["price"], d["source"], d["estate_name"], d["rent_type"],
             d["few_room"], d["room_name"], d["area"], d["floor"], d["total_floor"], d["orientation"],
             d["district_name"],
-            d["business_circle_name"], d["subway_station_name"], d["subway_line_name"], d["walk_distance"],
+            d["business_circle_name"], d["subway_station_name"], d["subway_line_name"],  d["walk_distance"] if d["walk_distance"]!='' else None,
             d["house_tags"], u)
         print(d)
         cursor.execute(insert_sql, data_to_insert)
